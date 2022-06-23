@@ -56,25 +56,19 @@ app.delete('/api/persons/:id/', (request, response, next) => {
     })
 })
 
-app.post('/api/persons/', (request, response) => {
+app.post('/api/persons/', (request, response, next) => {
     const person = request.body
-    if(!person.name) {
-        return response.status(400).json({
-            error: "name missing"
-        })
-    } else if (!person.number) {
-        return response.status(400).json({
-            error: "number missing"
-        })
-    } else {
-        const newPerson = new Person({
-            name: person.name,
-            number: person.number,
-        })
-        newPerson.save().then((savedNewPerson) => {
-            response.json(savedNewPerson)
-        })
-    }
+    const newPerson = new Person({
+        name: person.name,
+        number: person.number,
+    })
+    newPerson.save().then((savedNewPerson) => {
+        response.json(savedNewPerson)
+    })
+    .catch((error) => {
+        next(error)
+    })
+    
 })
 
 app.put('/api/persons/:id',  (request, response, next) => {
@@ -86,7 +80,7 @@ app.put('/api/persons/:id',  (request, response, next) => {
         number : body.number
     }
 
-    Person.findByIdAndUpdate(id, newPerson, {new: true})
+    Person.findByIdAndUpdate(id, newPerson, {new: true, runValidators:true, context:'query'})
     .then((updatedPerson) => {
         response.json(updatedPerson)
     })
@@ -95,18 +89,6 @@ app.put('/api/persons/:id',  (request, response, next) => {
     })
 })
 
-const generateID = () => {
-    const id = Math.floor(Math.random() * 999999999999)
-    return id
-}
-
-const checkExistence = (name) => {
-    const names = persons.map((person) => {
-        return person.name
-    })
-    return names.includes(name)
-}
-
 const unknownEndPoint = (request, response) => {
     response.status(404).send({error : 'unknown endpoint'})
 }
@@ -114,7 +96,11 @@ app.use(unknownEndPoint)
 
 const errorHandler = (error, request, response, next) => {
     if (error.name === 'CastError') {
+        console.log(error)
         return response.status(400).send({error : 'malformated id'})
+    } else if (error.name === 'ValidationError') {
+        console.log(error)
+        return response.status(400).send({error: error.message})
     }
     next(error)
 } 
