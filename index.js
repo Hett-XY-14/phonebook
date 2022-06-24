@@ -11,8 +11,6 @@ app.use(cors())
 app.use(express.static('build'))
 //
 const morgan = require('morgan')
-const { nextTick } = require('process')
-const { LOADIPHLPAPI } = require('dns')
 morgan.token('body', (request) => JSON.stringify(request.body))
 app.use(morgan(':method :url :status :res[content-length] :response-time ms :body'))
 //
@@ -69,6 +67,10 @@ app.post('/api/persons/', (request, response, next) => {
         next(error)
     })
     
+})
+
+app.post('/api/persons/:id', (request, response) => {
+    response.status(400).send({error: 'Name is already added, try to update by making a PUT request'})
 })
 
 app.put('/api/persons/:id',  (request, response, next) => {

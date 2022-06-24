@@ -22,9 +22,15 @@ const personSchema = new mongoose.Schema({
     },
     number: {
         type: String,
+        validate: {
+            validator: (value) => {
+                return /\d{2,3}-\d{5,}/.test(value)
+            },
+            message: `Invalid number. Valid formats: xxx-xxxxx...+ or xx-xxxxxx...+` 
+        },
         required: true,
-        minLength: 10,
-        maxLength: 10
+        minLength: 8,
+        maxLength: 14
     }
 })
 
