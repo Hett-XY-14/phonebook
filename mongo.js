@@ -18,20 +18,21 @@ const Person = mongoose.model('Person', personSchema)
 
 if (process.argv.length === 3) {    
     mongoose
-    .connect(url)
-    .then((result) => {
-        Person
-        .find({})
+        .connect(url)
         .then((result) => {
-            result.forEach(person => {
-                console.log(person)
-            })
-            mongoose.connection.close()
+            console.log(result)
+            Person
+                .find({})
+                .then((result) => {
+                    result.forEach(person => {
+                        console.log(person)
+                    })
+                    mongoose.connection.close()
+                })
         })
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .catch((err) => {
+            console.log(err)
+        })
 
 } else if (process.argv.length === 5) {
 
@@ -40,6 +41,7 @@ if (process.argv.length === 3) {
     mongoose
         .connect(url)
         .then((result) => {
+            console.log(result)
             const person =  new Person({
                 name : name,
                 number : phoneNumber,

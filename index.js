@@ -46,12 +46,12 @@ app.get('/api/persons/:id/', (request, response, next) => {
 app.delete('/api/persons/:id/', (request, response, next) => {
     const id = request.params.id
     Person.findByIdAndDelete(id)
-    .then((deletedPerson) => {
-        response.json(deletedPerson)
-    })
-    .catch((error) => {
-        next(error)
-    })
+        .then((deletedPerson) => {
+            response.json(deletedPerson)
+        })
+        .catch((error) => {
+            next(error)
+        })
 })
 
 app.post('/api/persons/', (request, response, next) => {
@@ -63,9 +63,9 @@ app.post('/api/persons/', (request, response, next) => {
     newPerson.save().then((savedNewPerson) => {
         response.json(savedNewPerson)
     })
-    .catch((error) => {
-        next(error)
-    })
+        .catch((error) => {
+            next(error)
+        })
     
 })
 
@@ -83,12 +83,12 @@ app.put('/api/persons/:id',  (request, response, next) => {
     }
 
     Person.findByIdAndUpdate(id, newPerson, {new: true, runValidators:true, context:'query'})
-    .then((updatedPerson) => {
-        response.json(updatedPerson)
-    })
-    .catch((error) => {
-        next(error)
-    })
+        .then((updatedPerson) => {
+            response.json(updatedPerson)
+        })
+        .catch((error) => {
+            next(error)
+        })
 })
 
 const unknownEndPoint = (request, response) => {

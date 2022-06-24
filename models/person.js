@@ -1,18 +1,17 @@
-const { builtinModules } = require('module')
 const mongoose = require('mongoose')
 require('dotenv').config()
 const url = process.env.MONGODB_URI
 
-console.log("attempting to connect to MongoDB...")
+console.log('attempting to connect to MongoDB...')
 
 mongoose
-.connect(url)
-.then((result) => {
-    console.log("connection to MongoDB stablished!")
-})
-.catch((error) => {
-    console.log("the connection to MongoDB has failed, the next error has ocurred: ", error.message)
-})
+    .connect(url)
+    .then(() => {
+        console.log('connection to MongoDB stablished!')
+    })
+    .catch((error) => {
+        console.log('the connection to MongoDB has failed, the next error has ocurred: ', error.message)
+    })
 
 const personSchema = new mongoose.Schema({
     name: {
@@ -24,9 +23,9 @@ const personSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: (value) => {
-                return /\d{2,3}-\d{5,}/.test(value)
+                return /\d{2,3}-\d{5,}/y.test(value)
             },
-            message: `Invalid number. Valid formats: xxx-xxxxx...+ or xx-xxxxxx...+` 
+            message: 'Invalid number. Valid formats: xxx-xxxxx... or xx-xxxxxx... (8 or more digits)' 
         },
         required: true,
         minLength: 8,
