@@ -1,7 +1,8 @@
-Phonebook is microapp developed as part of the Helsinski's University FullStackOpen course. 
+Phonebook is microapp project developep as part of the Helsinski's University FullStackOpen course. 
 It was developed using the following stack:
-    Frontend: HTML, CSS, JS and REACTJS
-    Backend: NodeJS, Express, Heroku server
-    Used and relevant: RESTful API,  Git, Bash commands, Postman
+    Frontend: HTML, CSS, JS and REACTJS; 
+    Backend: NodeJS, Express, Mongoose, (running in a Heroku server); 
+    Database: MongoDB; 
+    Relevant: RESTful API,  Git, Bash commands, Postman. 
 
-See the running app at: https://hhg-phonebook.herokuapp.com/
+See the running app at (mobile oriented): https://hhg-phonebook.herokuapp.com/
