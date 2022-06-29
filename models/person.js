@@ -25,7 +25,7 @@ const personSchema = new mongoose.Schema({
             validator: (value) => {
                 return /\d{2,3}-\d{5,}/y.test(value)
             },
-            message: 'Invalid number. Valid formats: xxx-xxxxx... or xx-xxxxxx... (8 or more digits)' 
+            message: 'Valid formats: xxx-xxxxx... or xx-xxxxxx... (8 or more digits)' 
         },
         required: true,
         minLength: 8,
